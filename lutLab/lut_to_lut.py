@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 """ Convert a LUT into another format
 
@@ -9,7 +9,7 @@ __version__ = "0.2"
 import argparse
 import os
 import ntpath
-from PyOpenColorIO.Constants import INTERP_LINEAR, INTERP_TETRAHEDRAL
+from PyOpenColorIO import Constants
 from utils import debug_helper
 import sys
 import utils.lut_presets as presets
@@ -115,12 +115,12 @@ def lut_to_lut(inlutfiles, out_type=None, out_format=None, outlutfile=None,
                                                        outlutfile))
         print("Final setting:\n{0}".format(presets.string_preset(preset)))
     processor = create_ocio_processor(inlutfiles,
-                                      interpolation=INTERP_LINEAR,
+                                      interpolation=Constants.INTERP_LINEAR,
                                       inverse=inverse)
     # change interpolation if 3D LUT
     if is_3d_lut(processor, inlutfiles[0]):
         processor = create_ocio_processor(inlutfiles,
-                                          interpolation=INTERP_TETRAHEDRAL,
+                                          interpolation=Constants.INTERP_TETRAHEDRAL,
                                           inverse=inverse)
     # write LUT
     message = write_function(processor.applyRGB, outlutfile, preset)

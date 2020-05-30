@@ -7,12 +7,7 @@ __version__ = "0.1"
 import os
 # import OpenColorIO
 from PyOpenColorIO import (
-    Config, ColorSpace, FileTransform, GroupTransform,
-)
-from PyOpenColorIO.Constants import (
-    INTERP_LINEAR,
-    COLORSPACE_DIR_TO_REFERENCE,
-    TRANSFORM_DIR_FORWARD, TRANSFORM_DIR_INVERSE,
+    Config, ColorSpace, Constants, FileTransform, GroupTransform,
 )
 
 OCIO_1D_LUTS_FORMATS = ['.csp', '.cub', '.cube', '.hdl', '.spi1d']
@@ -25,7 +20,7 @@ OCIO_LUTS_FORMATS = sorted(OCIO_1D_LUTS_FORMATS +
                                 set(OCIO_1D_LUTS_FORMATS)))
 
 
-def create_ocio_processor(lutfiles, interpolation=INTERP_LINEAR, inverse=False,
+def create_ocio_processor(lutfiles, interpolation=Constants.INTERP_LINEAR, inverse=False,
                           prelutfile=None, postlutfile=None):
     """Create an OpenColorIO processor for lutfile
 
@@ -47,9 +42,9 @@ def create_ocio_processor(lutfiles, interpolation=INTERP_LINEAR, inverse=False,
 
     """
     if inverse:
-        direction = TRANSFORM_DIR_INVERSE
+        direction = Constants.TRANSFORM_DIR_INVERSE
     else:
-        direction = TRANSFORM_DIR_FORWARD
+        direction = Constants.TRANSFORM_DIR_FORWARD
     config = Config()
     # In colorspace (LUT)
     colorspace = ColorSpace(name='RawInput')
@@ -69,7 +64,7 @@ def create_ocio_processor(lutfiles, interpolation=INTERP_LINEAR, inverse=False,
     if postlutfile:
         postlut = FileTransform(postlutfile, interpolation=interpolation)
         group.push_back(postlut)
-    colorspace.setTransform(group, COLORSPACE_DIR_TO_REFERENCE)
+    colorspace.setTransform(group, Constants.COLORSPACE_DIR_TO_REFERENCE)
     config.addColorSpace(colorspace)
     # Out colorspace
     colorspace = ColorSpace(name='ProcessedOutput')
@@ -81,7 +76,7 @@ def create_ocio_processor(lutfiles, interpolation=INTERP_LINEAR, inverse=False,
         # tetrahedral interpolation is only allowed with 3D LUT
         # TODO set interpo mode by LUT
         if "tetrahedral interpolation is not allowed" in str(e):
-            return create_ocio_processor(lutfiles, interpolation=INTERP_LINEAR,
+            return create_ocio_processor(lutfiles, interpolation=Constants.INTERP_LINEAR,
                                          inverse=inverse,
                                          prelutfile=prelutfile,
                                          postlutfile=postlutfile)
