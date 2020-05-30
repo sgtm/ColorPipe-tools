@@ -6,7 +6,7 @@
 
 """
 __version__ = "0.1"
-from . import plot_that_lut
+from plotThatLut import plot_that_lut
 import argparse
 from utils import debug_helper
 import sys
