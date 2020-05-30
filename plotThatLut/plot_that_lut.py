@@ -8,7 +8,7 @@
 __version__ = "0.1"
 import os
 # OpenColorIO
-from PyOpenColorIO.Constants import INTERP_LINEAR
+from PyOpenColorIO import Constants
 from utils.ocio_helper import (
     OCIO_LUTS_FORMATS, create_ocio_processor, is_3d_lut
 )
@@ -253,7 +253,7 @@ def plot_that_lut(lutfiles, plot_type=None, count=None, inverse=False,
             raise PlotThatLutException("Error: {0} file aren't supported.\n{1}"
                                        .format(fileext, supported_formats()))
         # create OCIO processor
-        processors.append(create_ocio_processor(lutfile, INTERP_LINEAR,
+        processors.append(create_ocio_processor(lutfile, Constants.INTERP_LINEAR,
                                                 inverse, prelutfile,
                                                 postlutfile))
     # init args

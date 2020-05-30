@@ -121,7 +121,7 @@ class Application(object):
             str.
         """
         # read data
-        all_data = ''
+        all_data = b''
         while True:
             data = upfile.file.read(8192)
             if not data:
@@ -157,9 +157,14 @@ APP_CONF = {'/css/style.css': {'tools.staticfile.on': True,
                              }
             }
 
-# Update server config
-cherrypy.config.update(os.path.join(CURRENT_DIR, "server.conf"))
+if __name__ == '__main__':
+    # Make sure these directories exist.
+    os.makedirs(IMG_DIR, exist_ok=True)
+    os.makedirs(UPLOAD_DIR, exist_ok=True)
 
-# Start server
-cherrypy.quickstart(APP_ROOT, config=APP_CONF)
-cherrypy.engine.start()
+    # Update server config
+    cherrypy.config.update(os.path.join(CURRENT_DIR, "server.conf"))
+
+    # Start server
+    cherrypy.quickstart(APP_ROOT, config=APP_CONF)
+    cherrypy.engine.start()
