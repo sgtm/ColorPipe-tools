@@ -1,0 +1,8 @@
+#!/bin/bash
+if [ -e '/usr/bin/python3' ]; then
+  PYTHON=/usr/bin/python3
+else
+  PYTHON=$(which python3)
+fi
+DIR=$(dirname $(readlink -f "$0"))/..
+PYTHONPATH="${DIR}" "${PYTHON}" "${DIR}/lutLab/lut_to_lut.py" $*
