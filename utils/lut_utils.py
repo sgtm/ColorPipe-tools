@@ -86,7 +86,7 @@ def get_3d_list_values(cubesize, processor, hexa_values=False):
     TODO Use by plot_that_lut, to remove someday
 
     """
-    input_range = range(0, cubesize)
+    input_range = list(range(0, cubesize))
     max_value = cubesize - 1.0
     red_values = []
     green_values = []

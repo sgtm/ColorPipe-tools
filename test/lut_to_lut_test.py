@@ -41,7 +41,7 @@ class LUTToLUTTest(unittest.TestCase):
                                       "saturation_export." + form)
             lut_to_lut(self.lut3d, "3D", form, outlutfile)
             # test wrong int range
-            self.failUnlessRaises(PresetException, lut_to_lut, self.lut3d,
+            self.assertRaises(PresetException, lut_to_lut, self.lut3d,
                                   "3D", form, outlutfile,
                                   output_range=[0, 1024])
 
@@ -52,14 +52,14 @@ class LUTToLUTTest(unittest.TestCase):
         outlutfile = os.path.join(self.tmp_dir, "CineonToLin_export.3dl")
         lut_to_lut(self.lut1d, "3D", "3dl", outlutfile)
         # test wrong float range
-        self.failUnlessRaises(PresetException, lut_to_lut, self.lut3d,
+        self.assertRaises(PresetException, lut_to_lut, self.lut3d,
                               "3D", "3dl", outlutfile, input_range=[0.0, 1.0])
         # test wrong type
-        self.failUnlessRaises(ThreeDLHelperException, lut_to_lut, self.lut3d,
+        self.assertRaises(ThreeDLHelperException, lut_to_lut, self.lut3d,
                               "2D", "3dl", outlutfile, input_range=[0.0, 1.0])
 
         # test wrong extension
-        self.failUnlessRaises(LUTException, lut_to_lut, self.lut3d,
+        self.assertRaises(LUTException, lut_to_lut, self.lut3d,
                               "3D", "csp", outlutfile, input_range=[0.0, 1.0])
 
     def test_export_cc_json(self):
@@ -71,7 +71,7 @@ class LUTToLUTTest(unittest.TestCase):
             outlutfile = os.path.join(self.tmp_dir, "CineonToLin_export" + ext)
             lut_to_lut(self.lut1d, "3D", form, outlutfile)
             # test wrong type
-            self.failUnlessRaises(excep, lut_to_lut, self.lut3d,
+            self.assertRaises(excep, lut_to_lut, self.lut3d,
                                   "2D", form, outlutfile)
 
     def test_export_spi(self):
@@ -83,10 +83,10 @@ class LUTToLUTTest(unittest.TestCase):
         lut_to_lut(self.lut1d, "1D", "spi", outlutfile, inverse=True)
         lut_to_lut(self.lut1d, "2D", "spi", outlutfile)
         # test wrong int range
-        self.failUnlessRaises(PresetException, lut_to_lut, self.lut1d,
+        self.assertRaises(PresetException, lut_to_lut, self.lut1d,
                               "1D", "spi", outlutfile, output_range=[0, 1024])
         # test 3D export with wrong ext
-        self.failUnlessRaises(LUTException, lut_to_lut, self.lut3d, "3D",
+        self.assertRaises(LUTException, lut_to_lut, self.lut3d, "3D",
                               "spi", outlutfile)
         # test 3D export
         outlutfile = os.path.join(self.tmp_dir, "saturation_export.spi3d")
@@ -101,11 +101,11 @@ class LUTToLUTTest(unittest.TestCase):
         lut_to_lut(self.lut1d, "1D", "lut", outlutfile)
         lut_to_lut(self.lut1d, "2D", "lut", outlutfile)
         # test wrong type
-        self.failUnlessRaises(AsciiHelperException, lut_to_lut, self.lut3d,
+        self.assertRaises(AsciiHelperException, lut_to_lut, self.lut3d,
                               "3D", "lut", outlutfile)
         # test wrong out bit depth
         # (default output range is [0, 1023], out bit depth must be 10
-        self.failUnlessRaises(AsciiHelperException, lut_to_lut, self.lut1d,
+        self.assertRaises(AsciiHelperException, lut_to_lut, self.lut1d,
                               "1D", "lut", outlutfile, out_bit_depth=12)
 
     def test_concatenate_luts(self):

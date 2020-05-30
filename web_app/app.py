@@ -98,14 +98,14 @@ class Application(object):
                 '<img src="/{0}" width="640" height="480"'
                 'border="0"/>'
             ).format(result)
-        except Exception, e:
+        except Exception as e:
             error = str(e).replace('\n', '<br>')
             result = (
                 "<h2>Something went wrong ! </h2>"
                 "<br>"
                 '<font color="#FF0000">{0}</font><br>'
             ).format(error)
-            print traceback.format_exc()
+            print(traceback.format_exc())
         # call template
         mytemplate = MY_LOOKUP.get_template("PlotThatLut/plot.html")
         return mytemplate.render(label=label, image=result)

@@ -88,7 +88,7 @@ def print_error_message(message):
         message (str): message to display
 
     """
-    print get_error_message(message)
+    print(get_error_message(message))
 
 
 def print_warning_message(message):
@@ -98,7 +98,7 @@ def print_warning_message(message):
         message (str): message to display
 
     """
-    print get_warning_message(message)
+    print(get_warning_message(message))
 
 
 def print_success_message(message):
@@ -108,4 +108,4 @@ def print_success_message(message):
         message (str): message to display
 
     """
-    print get_success_message(message)
+    print(get_success_message(message))

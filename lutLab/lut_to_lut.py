@@ -111,9 +111,9 @@ def lut_to_lut(inlutfiles, out_type=None, out_format=None, outlutfile=None,
     if smooth_size:
         preset[presets.SMOOTH] = smooth_size
     if verbose:
-        print "{0} will be converted into {1}.".format(inlutfiles,
-                                                       outlutfile)
-        print "Final setting:\n{0}".format(presets.string_preset(preset))
+        print("{0} will be converted into {1}.".format(inlutfiles,
+                                                       outlutfile))
+        print("Final setting:\n{0}".format(presets.string_preset(preset)))
     processor = create_ocio_processor(inlutfiles,
                                       interpolation=INTERP_LINEAR,
                                       inverse=inverse)

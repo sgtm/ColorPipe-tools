@@ -71,6 +71,6 @@ def make_full_version_action(version_text):
                 metavar=metavar, type=typ, help=help_str)
 
         def __call__(self, parser, namespace, values, option_string=None):
-            print version_text
+            print(version_text)
             sys.exit()
     return FullVersionAction

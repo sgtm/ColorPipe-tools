@@ -36,7 +36,7 @@ class GeneralTest(unittest.TestCase):
         presets.write_preset(self.preset_path, preset)
         back_preset = presets.read_preset(self.preset_path)
         expression = set(back_preset).issubset(set(preset))
-        self.assert_(expression,
+        self.assertTrue(expression,
                      ("Something went wrong in preset write and read :\n"
                       "Write preset:\n{0}\nRead one:\n{1}"
                       ).format(preset, back_preset))
@@ -61,11 +61,11 @@ class GeneralTest(unittest.TestCase):
 
         """
         loaded_presets = presets.get_presets_from_env()
-        self.assert_(len(loaded_presets) > 0, ("No preset loaded. "
+        self.assertTrue(len(loaded_presets) > 0, ("No preset loaded. "
                                                "Default presets should at "
                                                "least have been detected"))
         # try to use the first preset
-        preset = loaded_presets.values()[0]
+        preset = list(loaded_presets.values())[0]
         curve_to_lut('sRGB', None, outlutfile=self.tmp_dir, preset=preset)
 
     def tearDown(self):

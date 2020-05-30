@@ -237,7 +237,7 @@ def add_preset_option(parser):
     if len(loaded_presets) > 0:
         parser.add_argument('--preset',
                             type=str,
-                            choices=loaded_presets.keys(),
+                            choices=list(loaded_presets.keys()),
                             help=('Use a LUT export preset to set output LUT '
                                   'arguments'),
                             default=None)

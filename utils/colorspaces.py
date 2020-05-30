@@ -10,11 +10,10 @@ import math
 import collections
 
 
-class AbstractColorspace(object):
+class AbstractColorspace(object, metaclass=ABCMeta):
     """Abstract Color Space
 
     """
-    __metaclass__ = ABCMeta
 
     @abstractmethod
     def get_red_primaries(self):

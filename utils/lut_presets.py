@@ -252,7 +252,7 @@ def string_preset(preset):
 
     """
     string = '{\n'
-    for attr in preset.keys():
+    for attr in list(preset.keys()):
         string = "{0}  {1}: {2},\n".format(string, attr, preset[attr])
     string += '}\n'
     return string

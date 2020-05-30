@@ -105,8 +105,8 @@ def curve_to_lut(colorspace, gamma, outlutfile, out_type=None, out_format=None,
     else:
         # colorspace mode
         try:
-            colorspace_obj = dict(COLORSPACES.items() +
-                                  PRIVATE_COLORSPACES.items())[colorspace]
+            colorspace_obj = dict(list(COLORSPACES.items()) +
+                                  list(PRIVATE_COLORSPACES.items()))[colorspace]
         except KeyError:
             raise CurveToLUTException(("Unsupported {0} "
                                        "Colorspace!").format(colorspace))
@@ -160,8 +160,8 @@ def curve_to_lut(colorspace, gamma, outlutfile, out_type=None, out_format=None,
             raise CurveToLUTException(("--process-input-range must be used"
                                        " with --colorspace."))
     if verbose:
-        print "{0} will be written in {1}.".format(title, outlutfile)
-        print "Final setting:\n{0}".format(presets.string_preset(preset))
+        print("{0} will be written in {1}.".format(title, outlutfile))
+        print("Final setting:\n{0}".format(presets.string_preset(preset)))
     # write
     message = write_function(gradation, outlutfile, preset)
     if verbose:
@@ -184,8 +184,8 @@ def __get_options():
     action.add_argument("--colorspace",
                         help=("Input RGB Colorspace."),
                         type=str,
-                        choices=sorted(COLORSPACES.keys() +
-                                       PRIVATE_COLORSPACES.keys()))
+                        choices=sorted(list(COLORSPACES.keys()) +
+                                       list(PRIVATE_COLORSPACES.keys())))
     action.add_argument("--gamma",
                         help="Input pure gamma gradation",
                         type=float)

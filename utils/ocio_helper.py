@@ -77,7 +77,7 @@ def create_ocio_processor(lutfiles, interpolation=INTERP_LINEAR, inverse=False,
     # Create a processor corresponding to the LUT transformation
     try:
         return config.getProcessor('RawInput', 'ProcessedOutput')
-    except Exception, e:
+    except Exception as e:
         # tetrahedral interpolation is only allowed with 3D LUT
         # TODO set interpo mode by LUT
         if "tetrahedral interpolation is not allowed" in str(e):

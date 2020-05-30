@@ -6,7 +6,7 @@
 
 """
 __version__ = "0.1"
-import plot_that_lut
+from . import plot_that_lut
 import argparse
 from utils import debug_helper
 import sys
@@ -80,5 +80,5 @@ if __name__ == '__main__':
                                     ARGS.prelutfile,
                                     ARGS.postlutfile,
                                     ARGS.markers)
-    except Exception, exc:
-        print "Watch out !\n%s" % exc
+    except Exception as exc:
+        print("Watch out !\n%s" % exc)

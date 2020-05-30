@@ -102,33 +102,33 @@ class AbstractLUTTest(unittest.TestCase):
         CUBE_HELPER.check_preset(default_preset)
         # test missing attr
         cust_preset = {}
-        self.failUnlessRaises(presets.PresetException,
+        self.assertRaises(presets.PresetException,
                               CUBE_HELPER.check_preset, cust_preset)
         for attr in presets.BASIC_ATTRS:
             cust_preset[attr] = default_preset[attr]
-            self.failUnlessRaises(presets.PresetException,
+            self.assertRaises(presets.PresetException,
                               CUBE_HELPER.check_preset, cust_preset)
         ## test specific attr
         # change type to 1D
         cust_preset[presets.TYPE] = '1D'
-        self.failUnlessRaises(presets.PresetException,
+        self.assertRaises(presets.PresetException,
                               CUBE_HELPER.check_preset, cust_preset)
         cust_preset[presets.OUT_BITDEPTH] = 12
         CUBE_HELPER.check_preset(cust_preset)
         # try to write a 3D LUT with a 1D preset
-        self.failUnlessRaises(alh.AbstractLUTException,
+        self.assertRaises(alh.AbstractLUTException,
                               CUBE_HELPER.write_3d_lut,
                               self.processor_1d,
                               outlutfile,
                               cust_preset)
         # change type to 2D
         cust_preset[presets.TYPE] = '3D'
-        self.failUnlessRaises(presets.PresetException,
+        self.assertRaises(presets.PresetException,
                               CUBE_HELPER.check_preset, cust_preset)
         cust_preset[presets.CUBE_SIZE] = 17
         CUBE_HELPER.check_preset(cust_preset)
         # try to write a 1D LUT with a 3D preset
-        self.failUnlessRaises(alh.AbstractLUTException,
+        self.assertRaises(alh.AbstractLUTException,
                               CUBE_HELPER.write_1d_lut,
                               self.processor_1d,
                               outlutfile,
@@ -136,14 +136,14 @@ class AbstractLUTTest(unittest.TestCase):
         # # test value type
         # cube size
         cust_preset[presets.CUBE_SIZE] = presets.CUBE_SIZE_MAX_VALUE + 1
-        self.failUnlessRaises(presets.PresetException,
+        self.assertRaises(presets.PresetException,
                               CUBE_HELPER.check_preset, cust_preset)
         cust_preset[presets.CUBE_SIZE] = default_preset[presets.CUBE_SIZE]
         # range
         tests = 'test', ['a', 'a'], [0.0, 0.5, 1.0], 0.1
         for test in tests:
             cust_preset[presets.IN_RANGE] = test
-            self.failUnlessRaises(presets.PresetException,
+            self.assertRaises(presets.PresetException,
                                   CUBE_HELPER.check_preset,
                                   cust_preset)
         cust_preset[presets.IN_RANGE] = 0.1, 1
@@ -198,7 +198,7 @@ class AbstractLUTTest(unittest.TestCase):
                 for rgb in test_values:
                     res = proc.applyRGB(rgb)
                     abs_value = abs(rgb[0] - res[0])
-                    self.assert_(abs_value < delta,
+                    self.assertTrue(abs_value < delta,
                                  "{0} transparency test failed : {1:8f} >"
                                  " acceptable delta ({2:8f})".format(name,
                                                                      abs_value,
@@ -211,19 +211,19 @@ class AbstractLUTTest(unittest.TestCase):
         """
         preset = presets.get_default_preset()
         # test type must be 3D
-        self.failUnlessRaises(presets.PresetException,
+        self.assertRaises(presets.PresetException,
                               THREEDL_HELPER.check_preset,
                               preset
                               )
         preset[presets.TYPE] = '3D'
         # test shaper attr exists
-        self.failUnlessRaises(presets.PresetException,
+        self.assertRaises(presets.PresetException,
                               THREEDL_HELPER.check_preset,
                               preset
                               )
         preset[SHAPER] = True
         # test mesh attr exists
-        self.failUnlessRaises(presets.PresetException,
+        self.assertRaises(presets.PresetException,
                               THREEDL_HELPER.check_preset,
                               preset
                               )
@@ -232,7 +232,7 @@ class AbstractLUTTest(unittest.TestCase):
         THREEDL_HELPER.check_preset(preset)
         # test ranges are int
         outlutfile = os.path.join(self.tmp_dir, "test.3dl")
-        self.failUnlessRaises(PresetException,
+        self.assertRaises(PresetException,
                               THREEDL_HELPER.write_3d_lut,
                               self.processor_3d.applyRGB,
                               outlutfile,
@@ -257,7 +257,7 @@ class AbstractLUTTest(unittest.TestCase):
                                   preset)
         # test out bit depth inadequate with output range
         preset[OUT_BITDEPTH] = 12
-        self.failUnlessRaises(AsciiHelperException, ASCII_HELPER.write_1d_lut,
+        self.assertRaises(AsciiHelperException, ASCII_HELPER.write_1d_lut,
                               colorspace.decode_gradation, outlutfile, preset)
 
     def test_complete_attributes(self):
@@ -270,14 +270,14 @@ class AbstractLUTTest(unittest.TestCase):
         cust_preset = {}
         cust_preset = ASCII_HELPER.complete_preset(cust_preset)
         expression = set(default_preset).issubset(set(cust_preset))
-        self.assert_(expression,
+        self.assertTrue(expression,
                      ("Something went wrong in preset completion :\n"
                       "Completed preset:\n{0}\nDefault one:\n{1}"
                       ).format(cust_preset, default_preset))
         ASCII_HELPER.check_preset(cust_preset)
         # try to write a float ascii lut without forcing float mode
         cust_preset[presets.IN_RANGE] = [0, 1.0]
-        self.failUnlessRaises(PresetException, ASCII_HELPER.write_1d_lut,
+        self.assertRaises(PresetException, ASCII_HELPER.write_1d_lut,
                               colorspace.decode_gradation,
                               outlutfile,
                               cust_preset)

@@ -7,7 +7,7 @@ __version__ = "0.2"
 from utils.abstract_lut_helper import AbstractLUTHelper
 from utils import lut_presets as presets
 from utils.color_log_helper import print_warning_message
-from itertools import izip
+
 
 
 class SpiHelperException(Exception):
@@ -85,7 +85,7 @@ class SpiLutHelper(AbstractLUTHelper):
         # cube size
         lutfile.write("{0} {0} {0}\n".format(preset[presets.CUBE_SIZE]))
         # write data
-        for in_rgb, rgb in izip(in_data, data):
+        for in_rgb, rgb in zip(in_data, data):
             lutfile.write(self._get_rgb_value_line(preset, rgb, in_rgb))
         lutfile.close()
         return self.get_export_message(file_path)

@@ -58,7 +58,7 @@ def show_plot(fig, filename):
         export_path = 'img/export_{0}.png'.format(filename)
         abs_export_path = '{0}/img/export_{1}.png'.format(current_dir,
                                                           filename)
-        print abs_export_path
+        print(abs_export_path)
         fig.savefig(abs_export_path)
         return export_path
     else:
@@ -110,7 +110,7 @@ def plot_curve(lutfiles, samples_count, processors, draw_red_curve=True,
     reds_it = itertools.cycle(mplh.REDS)
     greens_it = itertools.cycle(mplh.GREENS)
     blues_it = itertools.cycle(mplh.BLUES)
-    for lutfile, processor in itertools.izip(lutfiles, processors):
+    for lutfile, processor in zip(lutfiles, processors):
         # init vars
         max_value = samples_count - 1.0
         red_values = []
@@ -126,7 +126,7 @@ def plot_curve(lutfiles, samples_count, processors, draw_red_curve=True,
             blue_values.append(res[2])
             input_range.append(norm_value)
         # markers
-        marker = markers_it.next()
+        marker = next(markers_it)
         markersize = 0
         if display_markers:
             markersize = 4
@@ -137,14 +137,14 @@ def plot_curve(lutfiles, samples_count, processors, draw_red_curve=True,
                 label = labelbase
             else:
                 label = "{0} (R)".format(labelbase)
-            plot(input_range, red_values, color=reds_it.next(), marker=marker,
+            plot(input_range, red_values, color=next(reds_it), marker=marker,
                  label=label, linewidth=1, markersize=markersize)
         if draw_green_curve:
             if not draw_blue_curve and not draw_red_curve:
                 label = labelbase
             else:
                 label = "{0} (G)".format(labelbase)
-            plot(input_range, green_values, color=greens_it.next(),
+            plot(input_range, green_values, color=next(greens_it),
                  marker=marker, label=label, linewidth=1,
                  markersize=markersize)
         if draw_blue_curve:
@@ -152,7 +152,7 @@ def plot_curve(lutfiles, samples_count, processors, draw_red_curve=True,
                 label = labelbase
             else:
                 label = "{0} (B)".format(labelbase)
-            plot(input_range, blue_values, color=blues_it.next(), marker=marker,
+            plot(input_range, blue_values, color=next(blues_it), marker=marker,
                  label=label, linewidth=1, markersize=markersize)
     matplotlib.pyplot.legend(loc=4)
     return show_plot(fig, filename)
@@ -270,7 +270,7 @@ def plot_that_lut(lutfiles, plot_type=None, count=None, inverse=False,
         else:
             count = DEFAULT_CUBE_SIZE
     # plot
-    print "Plotting a {0} with {1} samples...".format(plot_type, count)
+    print("Plotting a {0} with {1} samples...".format(plot_type, count))
     if 'curve' in plot_type:
         draw_red_curve = True
         draw_green_curve = True

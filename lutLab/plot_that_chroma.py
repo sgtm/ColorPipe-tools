@@ -46,7 +46,7 @@ def plot_that_chroma(colorspaces, points, display_spectrum=False):
                 raise PlotThatChromaException(("Unsupported {0} Colorspace !").
                                               format(colorspace))
             mplh.plot_colorspace_gamut(colorspace_obj,
-                                       lines_color=colors_it.next())
+                                       lines_color=next(colors_it))
     if points:
         for point in points:
             mplh.plot_points(point[0], point[1])
@@ -70,8 +70,8 @@ def __get_options():
     parser.add_argument("-space", "--colorspace",
                         help=("RGB Colorspace."),
                         type=str, action='append', dest='colorspaces',
-                        choices=sorted(COLORSPACES.keys() +
-                                       PRIVATE_COLORSPACES.keys()))
+                        choices=sorted(list(COLORSPACES.keys()) +
+                                       list(PRIVATE_COLORSPACES.keys())))
     # Points
     parser.add_argument("-p", "--point", type=float, nargs=2,
                         metavar=('x', 'y'), action='append',
@@ -85,7 +85,7 @@ if __name__ == '__main__':
     PARSER = __get_options()
     ARGS = PARSER.parse_args()
     if len(sys.argv) < 2:
-        print "No option found !"
+        print("No option found !")
         PARSER.print_help()
     else:
         plot_that_chroma(ARGS.colorspaces, ARGS.points, ARGS.spectrum_locus)

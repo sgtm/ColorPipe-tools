@@ -30,11 +30,10 @@ class AbstractLUTException(Exception):
     pass
 
 
-class AbstractLUTHelper(object):
+class AbstractLUTHelper(object, metaclass=ABCMeta):
     """Abstract LUT helper
 
     """
-    __metaclass__ = ABCMeta
 
     @staticmethod
     def _get_pattern_1d(preset):
@@ -201,7 +200,7 @@ class AbstractLUTHelper(object):
 
         # remap processed values in data
         data = []
-        for red, green, blue in itertools.izip(sampled_reds,
+        for red, green, blue in zip(sampled_reds,
                                                sampled_greens,
                                                sampled_blues):
             data.append(Rgb(red, green, blue))

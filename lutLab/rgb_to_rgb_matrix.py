@@ -53,12 +53,12 @@ def display_matrix(in_colorspace, out_colorspace, matrix_format, primaries_only=
     else:
         matrix_dump = "{0}".format(matrix)
 
-    print "{0} to {1} matrix ({2} {3} output):\n".format(in_colorspace,
+    print("{0} to {1} matrix ({2} {3} output):\n".format(in_colorspace,
                                                          out_colorspace,
                                                          primaries_only and "primaries" or
                                                          "primaries + white point",
-                                                         matrix_format)
-    print matrix_dump
+                                                         matrix_format))
+    print(matrix_dump)
 
 
 def __get_options():
@@ -72,7 +72,7 @@ def __get_options():
     description = 'Print RGB -> RGB matrix'
     parser = argparse.ArgumentParser(description=description)
     # RGB colorspace
-    colorspaces = sorted(COLORSPACES.keys() + PRIVATE_COLORSPACES.keys() + [XYZ_colorspace])
+    colorspaces = sorted(list(COLORSPACES.keys()) + list(PRIVATE_COLORSPACES.keys()) + [XYZ_colorspace])
     parser.add_argument("-in", "--in-colorspace",
                         help=("Input RGB Colorspace."),
                         type=str,
